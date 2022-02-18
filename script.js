@@ -1,53 +1,49 @@
 const progressCircle = document.getElementById("progress_circle");
-
-const startingMInutes = 0.5;
+const timer = document.getElementById("timer");
+const startBtn = document.getElementById("start");
+const pauseBtn = document.getElementById("pause");
+const startingMInutes = 0.1;
 let time = startingMInutes * 60;
 let offset = 0;
-const timer = document.getElementById("timer");
 
-const clock = setInterval(
-  (updateCountdown = () => {
-    const minutes = Math.floor(time / 60);
-    let seconds = time % 60;
+let isPaused = true;
 
-    seconds = seconds < 10 ? "0" + seconds : seconds;
+const init = () => {
+  if (isPaused == false) {
+    const clock = setInterval(
+      (updateCountdown = () => {
+        console.log(time);
+        console.log(offset);
+        if (time == -1 || isPaused == true) {
+          clearInterval(clock);
+        }
 
-    timer.innerHTML = `${minutes}:${seconds}`;
+        const minutes = Math.floor(time / 60);
+        let seconds = time % 60;
 
-    time--;
-    offset += 9.354838709677419;
-    progressCircle.style.strokeDashoffset = Math.round(offset) + "%";
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    if (time == -1) {
-      clearInterval(clock);
-      // setTimeout(() => {
-      //   timer.innerHTML = "0:00";
-      // }, 1000);
-    }
+        timer.innerHTML = `${minutes}:${seconds}`;
 
-    console.log(time);
-    console.log(offset);
-  }),
-  1000
-);
+        time--;
+        offset += 48.33333333333333;
+        progressCircle.style.strokeDashoffset = Math.round(offset) + "%";
+      }),
+      1000
+    );
+  }
+};
 
-// let i = 0;
-// function move(time) {
-//   if (i == 0) {
-//     i = 1;
-//     let offset = 0;
-//     const id = setInterval(frame, time * 3.55);
-//     function frame() {
-//       if (offset == 290) {
-//         clearInterval(id);
-//         i = 0;
-//       } else {
-//         offset++;
-//         progressCircle.style.strokeDashoffset = offset + "%";
-//         console.log(i);
-//       }
-//     }
-//   }
-// }
+startBtn.addEventListener("click", () => {
+  startBtn.classList.add("hide");
+  pauseBtn.classList.add("show");
+  isPaused = false;
+  init();
+});
 
-// move(time);
+pauseBtn.addEventListener("click", () => {
+  startBtn.classList.remove("hide");
+  pauseBtn.classList.remove("show");
+  isPaused = true;
+  init();
+});

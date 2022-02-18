@@ -92,11 +92,69 @@ body {
   border: 5px solid rgb(0, 255, 255);
 }
 
+.start_container {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  border: 1px solid red;
+}
+
+.timer_container {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(0, 0, 0);
+}
+
+#start {
+  height: 100%;
+  width: 75%;
+  margin-left: auto;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 1.3rem;
+  letter-spacing: 7px;
+  margin: 0;
+  text-align: center;
+  border: 1px solid white;
+}
+
+#start.hide {
+  display: none;
+}
+
+#pause {
+  display: none;
+  position: absolute;
+  height: auto;
+  width: 75%;
+  margin-left: auto;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 1.3rem;
+  letter-spacing: 7px;
+  margin: 0;
+  text-align: center;
+}
+
+#pause.show {
+  display: block;
+}
+
+#timer {
+  font-size: 13vh;
+  border: 1px solid white;
+}
+
 #progress_bar_container {
   height: 55vh;
   width: 55vh;
   position: absolute;
   border-radius: 100% 100% 100% 100% / 100% 100% 100% 100%;
+  z-index: -1;
 }
 
 #progress_circle {
