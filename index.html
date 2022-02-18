@@ -11,10 +11,67 @@
 </head>
 
 <body>
+
     <section class="main">
 
-        <h1>dd</h1>
+        <div class="title">
+
+            <h1 id="title">pomodoro</h1>
+
+        </div>
+
+
+        <div class="break">
+
+            <ul id="break_ul">
+                <li>pomodoro</li>
+                <li>short break</li>
+                <li>long break</li>
+            </ul>
+
+        </div>
+
+        <div class="circle">
+
+            <div class="inner_circle">
+
+                <h1 id="timer">timer</h1>
+
+                <h2>pause/start</h2>
+
+            </div>
+
+
+
+
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" role="progressbar" id="progress_bar_container">
+                <defs>
+                    <linearGradient id="GradientColor">
+                        <stop offset="0%" stop-color="#e91e63" />
+                        <stop offset="100%" stop-color="#673ab7" />
+                    </linearGradient>
+                </defs>
+
+                <circle cx="50%" cy="50%" r="43%" stroke-linecap="round" id="progress_circle" />
+            </svg>
+
+        </div>
+
+        <div class="img_container">
+
+            <img src="./images/settings.png" alt="settings icon" id="gear_wheel" />
+
+        </div>
+
     </section>
+
+    <footer>
+        <a>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore, dolore?</a>
+        <a>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, recusandae!</a>
+        <a href="https://www.flaticon.com/free-icons/settings" title="settings icons">Settings icons created by Pixel
+            perfect - Flaticon</a>
+    </footer>
+
 
 </body>
 
