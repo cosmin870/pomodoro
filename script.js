@@ -2,7 +2,7 @@ const progressCircle = document.getElementById("progress_circle");
 const timer = document.getElementById("timer");
 const startBtn = document.getElementById("start");
 const pauseBtn = document.getElementById("pause");
-const startingMInutes = 0.1;
+const startingMInutes = 25;
 let time = startingMInutes * 60;
 let offset = 0;
 
@@ -14,7 +14,7 @@ const init = () => {
       (updateCountdown = () => {
         console.log(time);
         console.log(offset);
-        if (time == -1 || isPaused == true) {
+        if (time == 0 || isPaused == true) {
           clearInterval(clock);
         }
 
@@ -26,7 +26,8 @@ const init = () => {
         timer.innerHTML = `${minutes}:${seconds}`;
 
         time--;
-        offset += 48.33333333333333;
+        //plus one second offset
+        offset += 0.1932045303131246;
         progressCircle.style.strokeDashoffset = Math.round(offset) + "%";
       }),
       1000
