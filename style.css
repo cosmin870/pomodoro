@@ -6,6 +6,7 @@ body {
 }
 html {
   scroll-behavior: smooth;
+  background-color: rgba(117, 108, 108, 0.479);
 }
 
 .main {
@@ -13,7 +14,6 @@ html {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: rgba(117, 108, 108, 0.479);
 }
 
 .title {
@@ -188,6 +188,7 @@ footer {
   align-items: center;
   flex-direction: column;
   gap: 5px;
+  margin-top: 5%;
   font-size: 0.7rem;
 }
 
