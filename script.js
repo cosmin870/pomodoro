@@ -16,6 +16,7 @@ const init = () => {
         console.log(offset);
         if (time == 0 || isPaused == true) {
           clearInterval(clock);
+          progressCircle.style.strokeWidth = 0;
         }
 
         const minutes = Math.floor(time / 60);
@@ -27,7 +28,7 @@ const init = () => {
 
         time--;
         //plus one second offset
-        offset += 0.1932045303131246;
+        offset += 0.1798800799467022;
         progressCircle.style.strokeDashoffset = Math.round(offset) + "%";
       }),
       1000
