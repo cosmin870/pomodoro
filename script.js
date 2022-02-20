@@ -5,40 +5,66 @@ const pauseBtn = document.getElementById("pause");
 const pomodoro = document.getElementById("pomodoro");
 const shortBreak = document.getElementById("short_break");
 const longBreak = document.getElementById("long_break");
+const audio = new Audio("sounds/bell_sound.wav");
 
-let startingMInutes = 0.1;
-let time = startingMInutes * 60;
+class Values {
+  constructor(
+    startingMInutes,
+    time,
+    offset,
+    offsetIncrement,
+    isPaused,
+    cycleCounter
+  ) {
+    this.startingMInutes = startingMInutes;
+    this.time = time = startingMInutes * 60;
+    this.offset = offset;
+    this.offsetIncrement = offsetIncrement;
+    this.isPaused = isPaused;
+    this.cycleCounter = cycleCounter;
+  }
+}
 
-let offset = 0;
-let isPaused = true;
+// let startingMInutes = 0;
+// let time = startingMInutes * 60;
+
+// let offset = 0;
+// let offsetIncrement = 0;
+// let isPaused = true;
+// let cycleCounter = 0;
 
 const init = () => {
-  if (isPaused == false) {
+  if (obj.isPaused == false) {
     const clock = setInterval(
       (updateCountdown = () => {
-        console.log(time);
-        if (time == 0 || isPaused == true) {
+        console.log(obj.time);
+        if (obj.time == 0 || obj.isPaused == true) {
           clearInterval(clock);
-        } else if (time == 0) {
-          progressCircle.style.strokeWidth = 0 + "px"; //dispare bulina de la sfarsit
+        }
+
+        if (obj.time == 0) {
+          progressCircle.style.strokeWidth = 0 + "px";
+          obj.cycleCounter++;
+          startBtn.innerHTML = "START#" + obj.cycleCounter;
         }
 
         // reset timer when it's finished
-        if (time <= 0) {
-          isPaused = true;
+        if (obj.time <= 0) {
+          obj.isPaused = true;
           checkFinished();
+          audio.play();
         }
 
-        const minutes = Math.floor(time / 60);
-        let seconds = time % 60;
+        const minutes = Math.floor(obj.time / 60);
+        let seconds = obj.time % 60;
 
         seconds = seconds < 10 ? "0" + seconds : seconds;
         timer.innerHTML = `${minutes}:${seconds}`;
 
-        time--;
+        obj.time--;
         //plus one second offset
-        offset += 38.57142857142857;
-        progressCircle.style.strokeDashoffset = Math.round(offset) + "%";
+        obj.offset += obj.offsetIncrement;
+        progressCircle.style.strokeDashoffset = Math.round(obj.offset) + "%";
       }),
       1000
     );
@@ -47,9 +73,9 @@ const init = () => {
 
 const checkFinished = () => {
   setTimeout(() => {
-    time = 6; //aici fac legatura cu timpul din  butoane
-    offset = 0;
-    progressCircle.style.strokeDashoffset = Math.round(offset) + "%";
+    obj.time = undefined; //aici fac legatura cu timpul din  butoane
+    obj.offset = 0;
+    progressCircle.style.strokeDashoffset = Math.round(obj.offset) + "%";
     progressCircle.style.strokeWidth = 13 + "px";
     startBtn.classList.remove("hide");
     pauseBtn.classList.remove("show");
@@ -69,7 +95,7 @@ startBtn.addEventListener("click", () => {
   //anti spam
 
   if (preventSpam <= 2) {
-    isPaused = false;
+    obj.isPaused = false;
     init();
     preventSpam++;
     for (let i = 0; i < preventSpam; i++) {
@@ -92,8 +118,27 @@ startBtn.addEventListener("click", () => {
 pauseBtn.addEventListener("click", () => {
   startBtn.classList.remove("hide");
   pauseBtn.classList.remove("show");
-  isPaused = true;
+  obj.isPaused = true;
   preventSpam++;
   console.log("prevent spam dupa PAUZA = " + preventSpam);
   console.log("S T O P");
 });
+
+// upper tab buttons-start constructor
+
+pomodoro.addEventListener("click", () => {
+  obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
+  timer.innerHTML = "25:00";
+});
+
+shortBreak.addEventListener("click", () => {
+  obj = new Values(5, undefined, 0, 0.8970099667774086, true, 0);
+  timer.innerHTML = "5:00";
+});
+
+longBreak.addEventListener("click", () => {
+  obj = new Values(15, undefined, 0, 0.2996670366259711, true, 0);
+  timer.innerHTML = "15:00";
+});
+
+let obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
