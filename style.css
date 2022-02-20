@@ -63,6 +63,7 @@ html {
   border: 2px solid red;
   width: 30%;
   height: 85%;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,7 +97,6 @@ html {
   height: 10%;
   display: flex;
   justify-content: center;
-  border: 1px solid red;
 }
 
 .timer_container {
@@ -117,7 +117,6 @@ html {
   letter-spacing: 7px;
   margin: 0;
   text-align: center;
-  border: 1px solid white;
 }
 
 #start.hide {
