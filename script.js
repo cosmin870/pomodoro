@@ -35,6 +35,7 @@ class Values {
 }
 
 let upperButtonsValue = "";
+let upperButtonsWaitingValue = "";
 
 // let startingMInutes = 0;
 // let time = startingMInutes * 60;
@@ -153,27 +154,26 @@ pauseBtn.addEventListener("click", () => {
 // upper tab buttons-start constructor
 
 pomodoro.addEventListener("click", () => {
-  obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
-
-  timer.innerHTML = "25:00";
+  upperButtonsWaitingValue = "25";
   upperButtonsValue = "25minutes";
   alertSwitchModes();
+  onSwitchModes();
   console.log(obj.time);
 });
 
 shortBreak.addEventListener("click", () => {
-  obj = new Values(5, undefined, 0, 0.8970099667774086, true, 0);
-
-  timer.innerHTML = "5:00";
+  upperButtonsWaitingValue = "5";
   upperButtonsValue = "5minutes";
   alertSwitchModes();
+  onSwitchModes();
   console.log(obj.time);
 });
 
 longBreak.addEventListener("click", () => {
+  upperButtonsValue = "15minutes";
+  upperButtonsWaitingValue = "15";
   alertSwitchModes();
   onSwitchModes();
-
   console.log(obj.time);
 });
 
@@ -183,10 +183,27 @@ let call = undefined;
 const onSwitchModes = () => {
   const alertTimeout = () => {
     let x = setTimeout(() => {
-      obj = new Values(15, undefined, 0, 0.2996670366259711, true, 0);
-      timer.innerHTML = "15:00";
-      upperButtonsValue = "15minutes";
-      console.log("timeoutSwitchModes DONE");
+      if (upperButtonsWaitingValue == "15") {
+        obj = new Values(15, undefined, 0, 0.2996670366259711, true, 0);
+        timer.innerHTML = "15:00";
+        console.log("DONE 15");
+      }
+
+      if (upperButtonsWaitingValue == "5") {
+        obj = new Values(5, undefined, 0, 0.8970099667774086, true, 0);
+        timer.innerHTML = "5:00";
+        upperButtonsWaitingValue = "5";
+        upperButtonsValue = "5minutes";
+        console.log("DONE 5");
+      }
+
+      if (upperButtonsWaitingValue == "25") {
+        obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
+        timer.innerHTML = "25:00";
+        upperButtonsWaitingValue = "25";
+        upperButtonsValue = "25minutes";
+        console.log("DONE 25");
+      }
     }, 20);
 
     if (call == 1) {
@@ -208,6 +225,7 @@ const alertSwitchModes = () => {
       pauseBtn.classList.remove("show");
       startBtn.classList.remove("hide");
       call = 0;
+      state = "idle";
       console.log("AI DAT OK");
     } else call = 1;
   }
