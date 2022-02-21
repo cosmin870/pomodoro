@@ -7,6 +7,15 @@ const shortBreak = document.getElementById("short_break");
 const longBreak = document.getElementById("long_break");
 const audio = new Audio("sounds/bell_sound.wav");
 
+//if user clicked or not on the start button
+window.onload = () => {
+  state = "idle";
+};
+
+let state = "";
+//end state
+
+//global obj constructor
 class Values {
   constructor(
     startingMInutes,
@@ -25,6 +34,8 @@ class Values {
   }
 }
 
+let upperButtonsValue = "";
+
 // let startingMInutes = 0;
 // let time = startingMInutes * 60;
 
@@ -33,6 +44,7 @@ class Values {
 // let isPaused = true;
 // let cycleCounter = 0;
 
+//main function for the timer
 const init = () => {
   if (obj.isPaused == false) {
     const clock = setInterval(
@@ -47,7 +59,6 @@ const init = () => {
           obj.cycleCounter++;
           startBtn.innerHTML = "START#" + obj.cycleCounter;
         }
-
         // reset timer when it's finished
         if (obj.time <= 0) {
           obj.isPaused = true;
@@ -73,7 +84,19 @@ const init = () => {
 
 const checkFinished = () => {
   setTimeout(() => {
-    obj.time = undefined; //aici fac legatura cu timpul din  butoane
+    //links between upper buttons
+    if ((upperButtonsValue = "25minutes")) {
+      obj.time = 1500;
+    }
+
+    if ((upperButtonsValue = "15minutes")) {
+      obj.time = 900;
+    }
+
+    if ((upperButtonsValue = "5minutes")) {
+      obj.time = 300;
+    }
+
     obj.offset = 0;
     progressCircle.style.strokeDashoffset = Math.round(obj.offset) + "%";
     progressCircle.style.strokeWidth = 13 + "px";
@@ -92,7 +115,10 @@ startBtn.addEventListener("click", () => {
   startBtn.classList.add("hide");
   pauseBtn.classList.add("show");
   console.log("porneste");
-  //anti spam
+  //idle state change on click
+  state = "active";
+
+  //anti spam function
 
   if (preventSpam <= 2) {
     obj.isPaused = false;
@@ -128,17 +154,63 @@ pauseBtn.addEventListener("click", () => {
 
 pomodoro.addEventListener("click", () => {
   obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
+
   timer.innerHTML = "25:00";
+  upperButtonsValue = "25minutes";
+  alertSwitchModes();
+  console.log(obj.time);
 });
 
 shortBreak.addEventListener("click", () => {
   obj = new Values(5, undefined, 0, 0.8970099667774086, true, 0);
+
   timer.innerHTML = "5:00";
+  upperButtonsValue = "5minutes";
+  alertSwitchModes();
+  console.log(obj.time);
 });
 
 longBreak.addEventListener("click", () => {
-  obj = new Values(15, undefined, 0, 0.2996670366259711, true, 0);
-  timer.innerHTML = "15:00";
+  alertSwitchModes();
+  onSwitchModes();
+
+  console.log(obj.time);
 });
+
+//functions for changing timer modes
+let call = undefined;
+
+const onSwitchModes = () => {
+  const alertTimeout = () => {
+    let x = setTimeout(() => {
+      obj = new Values(15, undefined, 0, 0.2996670366259711, true, 0);
+      timer.innerHTML = "15:00";
+      upperButtonsValue = "15minutes";
+      console.log("timeoutSwitchModes DONE");
+    }, 20);
+
+    if (call == 1) {
+      clearTimeout(x);
+      console.log("cleared timeout");
+    }
+  };
+
+  alertTimeout();
+};
+
+const alertSwitchModes = () => {
+  if (pauseBtn.classList.contains("show") || state == "active") {
+    if (
+      window.confirm(
+        "The timer is still running, are you sure you want to switch?"
+      ) == true
+    ) {
+      pauseBtn.classList.remove("show");
+      startBtn.classList.remove("hide");
+      call = 0;
+      console.log("AI DAT OK");
+    } else call = 1;
+  }
+};
 
 let obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
