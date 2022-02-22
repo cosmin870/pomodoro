@@ -13,6 +13,9 @@ const closeSettingsBtn = document.getElementById("close_settings");
 //if user clicked or not on the start button
 window.onload = () => {
   state = "idle";
+  pomodoro.classList.add("show");
+  font1.classList.add("show");
+  color1.classList.add("show");
 };
 
 let state = "";
@@ -161,7 +164,9 @@ pomodoro.addEventListener("click", () => {
   upperButtonsValue = "25minutes";
   alertSwitchModes();
   onSwitchModes();
-  console.log(obj.time);
+  pomodoro.classList.add("show");
+  shortBreak.classList.remove("show");
+  longBreak.classList.remove("show");
 });
 
 shortBreak.addEventListener("click", () => {
@@ -169,6 +174,9 @@ shortBreak.addEventListener("click", () => {
   upperButtonsValue = "5minutes";
   alertSwitchModes();
   onSwitchModes();
+  shortBreak.classList.add("show");
+  pomodoro.classList.remove("show");
+  longBreak.classList.remove("show");
   console.log(obj.time);
 });
 
@@ -177,6 +185,9 @@ longBreak.addEventListener("click", () => {
   upperButtonsWaitingValue = "15";
   alertSwitchModes();
   onSwitchModes();
+  longBreak.classList.add("show");
+  pomodoro.classList.remove("show");
+  shortBreak.classList.remove("show");
   console.log(obj.time);
 });
 
@@ -241,6 +252,58 @@ settings.addEventListener("click", () => {
 
 closeSettingsBtn.addEventListener("click", () => {
   settingsContainer.classList.remove("show");
+});
+
+//settings window variables + event listeners
+const body = document.body;
+const font1 = document.getElementById("font1");
+const font2 = document.getElementById("font2");
+const font3 = document.getElementById("font3");
+const color1 = document.getElementById("color1");
+const color2 = document.getElementById("color2");
+const color3 = document.getElementById("color3");
+
+font1.addEventListener("click", () => {
+  body.style.fontFamily = "Prompt";
+  font1.classList.add("show");
+  font2.classList.remove("show");
+  font3.classList.remove("show");
+});
+
+font2.addEventListener("click", () => {
+  body.style.fontFamily = "Cormorant";
+  font2.classList.add("show");
+  font1.classList.remove("show");
+  font3.classList.remove("show");
+});
+
+font3.addEventListener("click", () => {
+  body.style.fontFamily = "Roboto";
+  font3.classList.add("show");
+  font2.classList.remove("show");
+  font1.classList.remove("show");
+});
+
+color1.addEventListener("click", () => {
+  body.style.backgroundImage =
+    "radial-gradient(circle, #7b2cbf, #4d31a2, #262d80, #09255c, #051937)";
+  color1.classList.add("show");
+  color2.classList.remove("show");
+  color3.classList.remove("show");
+});
+color2.addEventListener("click", () => {
+  body.style.backgroundImage =
+    "radial-gradient(circle, #3c096c, #004197, #0067ab, #0089ae, #05a8aa)";
+  color1.classList.remove("show");
+  color2.classList.add("show");
+  color3.classList.remove("show");
+});
+color3.addEventListener("click", () => {
+  body.style.backgroundImage =
+    "radial-gradient(circle, #70e000, #00c377, #009f9b, #00768c, #495057)";
+  color1.classList.remove("show");
+  color2.classList.remove("show");
+  color3.classList.add("show");
 });
 
 let obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
