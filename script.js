@@ -6,6 +6,9 @@ const pomodoro = document.getElementById("pomodoro");
 const shortBreak = document.getElementById("short_break");
 const longBreak = document.getElementById("long_break");
 const audio = new Audio("sounds/bell_sound.wav");
+const settings = document.getElementById("gear_wheel");
+const settingsContainer = document.getElementById("settings_container");
+const closeSettingsBtn = document.getElementById("close_settings");
 
 //if user clicked or not on the start button
 window.onload = () => {
@@ -226,9 +229,18 @@ const alertSwitchModes = () => {
       startBtn.classList.remove("hide");
       call = 0;
       state = "idle";
+      progressCircle.style.strokeDashoffset = 0 + "%";
       console.log("AI DAT OK");
     } else call = 1;
   }
 };
+
+settings.addEventListener("click", () => {
+  settingsContainer.classList.toggle("show");
+});
+
+closeSettingsBtn.addEventListener("click", () => {
+  settingsContainer.classList.remove("show");
+});
 
 let obj = new Values(25, undefined, 0, 0.1798800799467022, true, 0);
