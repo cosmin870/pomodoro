@@ -42,21 +42,13 @@ class Values {
 
 let upperButtonsValue = "";
 let upperButtonsWaitingValue = "";
-
-// let startingMInutes = 0;
-// let time = startingMInutes * 60;
-
-// let offset = 0;
-// let offsetIncrement = 0;
-// let isPaused = true;
-// let cycleCounter = 0;
+let call = undefined;
 
 //main function for the timer
 const init = () => {
   if (obj.isPaused == false) {
     const clock = setInterval(
       (updateCountdown = () => {
-        console.log(obj.time);
         if (obj.time == 0 || obj.isPaused == true) {
           clearInterval(clock);
         }
@@ -109,7 +101,6 @@ const checkFinished = () => {
     progressCircle.style.strokeWidth = 13 + "px";
     startBtn.classList.remove("hide");
     pauseBtn.classList.remove("show");
-    console.log("checked");
   }, 1000);
 };
 
@@ -121,7 +112,6 @@ let preventSpam = 1;
 startBtn.addEventListener("click", () => {
   startBtn.classList.add("hide");
   pauseBtn.classList.add("show");
-  console.log("porneste");
   //idle state change on click
   state = "active";
 
@@ -134,15 +124,11 @@ startBtn.addEventListener("click", () => {
     for (let i = 0; i < preventSpam; i++) {
       timeout += 35;
     }
-    console.log("timeout " + timeout);
-    console.log("prevent spam initial = " + preventSpam);
   }
 
   if (preventSpam > 0) {
     const antiSpam = setInterval(() => {
-      console.log("A PORNIT INTERVALUL");
       preventSpam = 1;
-      console.log(preventSpam + " spam dupa interval");
       if (preventSpam <= 2) clearInterval(antiSpam);
     }, timeout);
   }
@@ -153,20 +139,23 @@ pauseBtn.addEventListener("click", () => {
   pauseBtn.classList.remove("show");
   obj.isPaused = true;
   preventSpam++;
-  console.log("prevent spam dupa PAUZA = " + preventSpam);
-  console.log("S T O P");
 });
 
 // upper tab buttons-start constructor
-
 pomodoro.addEventListener("click", () => {
   upperButtonsWaitingValue = "25";
   upperButtonsValue = "25minutes";
   alertSwitchModes();
   onSwitchModes();
-  pomodoro.classList.add("show");
-  shortBreak.classList.remove("show");
-  longBreak.classList.remove("show");
+  if (
+    call == 0 ||
+    (obj.isPaused == true && state == "idle") ||
+    (state == "active" && call == 0)
+  ) {
+    pomodoro.classList.add("show");
+    shortBreak.classList.remove("show");
+    longBreak.classList.remove("show");
+  }
 });
 
 shortBreak.addEventListener("click", () => {
@@ -174,10 +163,11 @@ shortBreak.addEventListener("click", () => {
   upperButtonsValue = "5minutes";
   alertSwitchModes();
   onSwitchModes();
-  shortBreak.classList.add("show");
-  pomodoro.classList.remove("show");
-  longBreak.classList.remove("show");
-  console.log(obj.time);
+  if (call == 0 || (obj.isPaused == true && state == "idle")) {
+    shortBreak.classList.add("show");
+    pomodoro.classList.remove("show");
+    longBreak.classList.remove("show");
+  }
 });
 
 longBreak.addEventListener("click", () => {
@@ -185,14 +175,14 @@ longBreak.addEventListener("click", () => {
   upperButtonsWaitingValue = "15";
   alertSwitchModes();
   onSwitchModes();
-  longBreak.classList.add("show");
-  pomodoro.classList.remove("show");
-  shortBreak.classList.remove("show");
-  console.log(obj.time);
+  if (call == 0 || (obj.isPaused == true && state == "idle")) {
+    longBreak.classList.add("show");
+    pomodoro.classList.remove("show");
+    shortBreak.classList.remove("show");
+  }
 });
 
 //functions for changing timer modes
-let call = undefined;
 
 const onSwitchModes = () => {
   const alertTimeout = () => {
@@ -200,7 +190,6 @@ const onSwitchModes = () => {
       if (upperButtonsWaitingValue == "15") {
         obj = new Values(15, undefined, 0, 0.2996670366259711, true, 0);
         timer.innerHTML = "15:00";
-        console.log("DONE 15");
       }
 
       if (upperButtonsWaitingValue == "5") {
@@ -208,7 +197,6 @@ const onSwitchModes = () => {
         timer.innerHTML = "5:00";
         upperButtonsWaitingValue = "5";
         upperButtonsValue = "5minutes";
-        console.log("DONE 5");
       }
 
       if (upperButtonsWaitingValue == "25") {
@@ -216,13 +204,11 @@ const onSwitchModes = () => {
         timer.innerHTML = "25:00";
         upperButtonsWaitingValue = "25";
         upperButtonsValue = "25minutes";
-        console.log("DONE 25");
       }
     }, 20);
 
     if (call == 1) {
       clearTimeout(x);
-      console.log("cleared timeout");
     }
   };
 
@@ -241,7 +227,6 @@ const alertSwitchModes = () => {
       call = 0;
       state = "idle";
       progressCircle.style.strokeDashoffset = 0 + "%";
-      console.log("AI DAT OK");
     } else call = 1;
   }
 };
